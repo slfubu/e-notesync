@@ -426,10 +426,15 @@
         try {
             const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
+                redirect: 'follow', // 🟢 ป้องกัน Google เปลี่ยนเส้นทางแล้วข้อมูลหาย
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8" // 🟢 ป้องกันเบราว์เซอร์บล็อก (CORS)
+                },
                 body: JSON.stringify({ action: actionName, ...dataObj })
             });
             return await response.json();
         } catch (error) {
+            console.error("Fetch Error: ", error);
             throw new Error("การเชื่อมต่อล้มเหลว กรุณาลองใหม่อีกครั้ง");
         }
     }
