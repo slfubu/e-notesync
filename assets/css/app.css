@@ -12,15 +12,23 @@
       --radius: 12px;
     }
 
+    html, body {
+      width: 100%;
+      min-width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Sarabun', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     * {
@@ -170,19 +178,25 @@
     #loginPage {
       position: fixed;
       inset: 0;
-      width: 100%;
+      width: 100vw;
+      max-width: none;
+      height: 100vh;
+      height: 100dvh;
       min-height: 100vh;
       z-index: 2000;
       display: grid;
-      grid-template-columns: minmax(420px, 0.92fr) minmax(520px, 1.08fr);
-      overflow: auto;
+      grid-template-columns: minmax(0, 58%) minmax(0, 42%);
+      overflow: hidden;
       background: #f7f8fb;
     }
 
     .login-brand-panel {
       position: relative;
       isolation: isolate;
+      width: 100%;
+      min-width: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -343,7 +357,10 @@
     }
 
     .login-auth-panel {
+      width: 100%;
+      min-width: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -354,7 +371,8 @@
     }
 
     .login-auth-wrap {
-      width: min(100%, 480px);
+      width: min(100%, 520px);
+      margin-inline: auto;
     }
 
     .login-mobile-brand {
@@ -918,6 +936,20 @@
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+
+    @media (min-width: 1600px) {
+      #loginPage {
+        grid-template-columns: minmax(0, 56%) minmax(0, 44%);
+      }
+
+      .login-auth-panel {
+        padding-inline: clamp(48px, 5vw, 96px);
+      }
+
+      .login-auth-wrap {
+        width: min(100%, 540px);
+      }
     }
 
     @media (max-width: 900px) {
