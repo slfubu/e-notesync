@@ -166,7 +166,7 @@
     Swal.fire({
       icon: 'info',
       title: 'กำลังเข้าสู่ระบบ',
-      html: 'กำลังตรวจสอบบัญชีผู้ใช้งานกับเซิร์ฟเวอร์<br><small style="color:#64748b">บางครั้ง Google Apps Script อาจใช้เวลาสักครู่ในการเริ่มทำงาน</small>',
+      html: 'กำลังตรวจสอบบัญชีผู้ใช้งานกับฐานข้อมูลระบบกลาง<br><small style="color:#64748b">บางครั้งอาจใช้เวลาสักครู่ในการเริ่มทำงาน</small>',
       allowOutsideClick: false,
       allowEscapeKey: false,
       showConfirmButton: false,
