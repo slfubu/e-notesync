@@ -560,7 +560,7 @@
     setLoading(true);
     try {
       const res = await Api.generateMemo(payload);
-      showDocumentPreview(res.pdfBase64, res.docxBase64);
+      showDocumentPreview(res.pdfBase64, res.docxBase64, res.exportErrors);
     }
     catch (err) { Swal.fire('Error', err.message, 'error'); }
     finally { setLoading(false); }
@@ -618,7 +618,7 @@
     setLoading(true);
     try {
       const res = await Api.generateAdminMemo(payload);
-      showDocumentPreview(res.pdfBase64, res.docxBase64);
+      showDocumentPreview(res.pdfBase64, res.docxBase64, res.exportErrors);
     }
     catch(err){ Swal.fire('Error',err.message,'error'); }
     finally{ setLoading(false); }
@@ -642,11 +642,14 @@
     }
   }
 
-  function showDocumentPreview(pdfBase64, docxBase64) {
+  function showDocumentPreview(pdfBase64, docxBase64, exportErrors = []) {
     revokeDocumentUrls();
 
     if (!pdfBase64 && !docxBase64) {
-      return Swal.fire('Error', 'ระบบไม่ได้รับไฟล์เอกสารจากเซิร์ฟเวอร์', 'error');
+      const details = Array.isArray(exportErrors) && exportErrors.length
+        ? exportErrors.map(x => `${x.format}: ${x.message}`).join('\n')
+        : 'ระบบไม่ได้รับไฟล์เอกสารจากเซิร์ฟเวอร์';
+      return Swal.fire('Error', details, 'error');
     }
 
     const wrapper = document.createElement('div');
@@ -654,8 +657,21 @@
 
     const info = document.createElement('div');
     info.style.cssText = 'background:#EFF6FF;border:1px solid #DBEAFE;border-radius:8px;padding:15px;margin-bottom:16px;text-align:left;line-height:1.6;';
-    info.textContent = 'ระบบสร้างเอกสารสำเร็จ สามารถดาวน์โหลดได้ทั้ง Microsoft Word (.docx) และ PDF (.pdf)';
+    if (pdfBase64 && docxBase64) {
+      info.textContent = 'ระบบสร้างเอกสารสำเร็จ สามารถดาวน์โหลดได้ทั้ง Microsoft Word (.docx) และ PDF (.pdf)';
+    } else if (pdfBase64) {
+      info.textContent = 'ระบบสร้าง PDF สำเร็จ แต่ Word ยังส่งออกไม่สำเร็จ กรุณาดูรายละเอียดด้านล่าง';
+    } else {
+      info.textContent = 'ระบบสร้าง Word สำเร็จ แต่ PDF ยังส่งออกไม่สำเร็จ กรุณาดูรายละเอียดด้านล่าง';
+    }
     wrapper.appendChild(info);
+
+    if (Array.isArray(exportErrors) && exportErrors.length) {
+      const warning = document.createElement('div');
+      warning.style.cssText = 'background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:8px;padding:12px 14px;margin-bottom:16px;text-align:left;font-size:13px;line-height:1.55;white-space:pre-wrap;';
+      warning.textContent = exportErrors.map(x => `${x.format}: ${x.message}`).join('\n');
+      wrapper.appendChild(warning);
+    }
 
     const actions = document.createElement('div');
     actions.style.cssText = 'display:grid;gap:10px;';
@@ -691,8 +707,8 @@
     wrapper.appendChild(actions);
 
     Swal.fire({
-      icon: 'success',
-      title: 'โปรแกรมสร้างเอกสารสำเร็จ',
+      icon: (pdfBase64 && docxBase64) ? 'success' : 'warning',
+      title: 'โปรแกรมสร้างเอกสารเสร็จแล้ว',
       html: wrapper,
       showConfirmButton: false,
       showCancelButton: true,
