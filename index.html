@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Round" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/app.css?v=1.6.0-combined-payroll">
+  <link rel="stylesheet" href="assets/css/app.css?v=1.6.1-refresh-session">
 </head>
 <body class="app-booting">
 
@@ -494,6 +494,7 @@
       <div class="modern-card"><div class="card-header"><div class="icon-box"><i class="material-icons-round">analytics</i></div><h3>2. ตรวจสอบยอดก่อนออกเอกสาร</h3></div><div class="card-body">
         <div class="combined-stats"><div><small>จำนวนคนไม่ซ้ำ</small><strong id="combinedPeople">—</strong></div><div><small>รายการอนุมัติ</small><strong id="combinedRows">—</strong></div><div><small>รวมเป็นเงินทั้งสิ้น</small><strong id="combinedTotal">—</strong></div><div><small>คงเหลือหลังขอเบิก</small><strong id="combinedBalance">—</strong></div></div>
         <p id="combinedPeriods" class="combined-note">กรุณาระบุช่วงวันที่อนุมัติ</p>
+        <p id="combinedBudgetDiagnostic" class="combined-note" aria-live="polite"></p>
         <div class="table-responsive"><table><thead><tr><th>หน่วยงาน</th><th>จำนวนคน</th><th style="text-align:right">ยอดขอเบิก (บาท)</th></tr></thead><tbody id="combinedSummaryBody"><tr><td colspan="3">ยังไม่มีข้อมูล</td></tr></tbody></table></div>
       </div></div>
       <div class="modern-card"><div class="card-header"><div class="icon-box"><i class="material-icons-round">description</i></div><h3>3. ออกเอกสารเทมเพลรวมหน่วยงาน</h3></div><div class="card-body"><div class="combined-fields"><div class="input-group"><label for="combinedRef">เลขที่หนังสือ</label><input id="combinedRef" class="form-control" value="อว 0604.4.1/"></div><div class="input-group"><label for="combinedDocumentDate">วันที่ออกเอกสาร</label><input id="combinedDocumentDate" type="date" class="form-control"></div><div class="input-group"><label for="combinedRound">เบิกครั้งที่</label><input id="combinedRound" type="number" min="1" step="1" class="form-control" placeholder="กรอกครั้งที่ เช่น 1"></div></div><p class="combined-note">ข้อมูลยอดเงิน จำนวนคน ประจำเดือน และยอดคงเหลือจะคำนวณใหม่จากเซิร์ฟเวอร์ก่อนสร้างเอกสาร</p><button id="combinedPrintBtn" type="button" class="btn btn-primary">สร้างเอกสารรวม PDF / Word</button></div></div>
@@ -540,8 +541,8 @@
     </div>
   </footer>
 
-  <script defer src="assets/js/config.js?v=1.6.0-combined-payroll"></script>
-  <script defer src="assets/js/api.js?v=1.6.0-combined-payroll"></script>
-  <script defer src="assets/js/app.js?v=1.6.0-combined-payroll"></script>
+  <script defer src="assets/js/config.js?v=1.6.1-refresh-session"></script>
+  <script defer src="assets/js/api.js?v=1.6.1-refresh-session"></script>
+  <script defer src="assets/js/app.js?v=1.6.2-balance-diagnostic"></script>
 </body>
 </html>
